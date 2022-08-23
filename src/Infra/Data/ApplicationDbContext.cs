@@ -3,15 +3,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace IWantApp.Infra.Data;
 
-public class ApplicationDbContext
+public class ApplicationDbContext: DbContext
 {
-    public class AppDbContext : DbContext
-    {
+    
         public DbSet<Product> Products { get; set; }
 
         public DbSet<Category> Categories { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
 
         }
@@ -27,5 +26,5 @@ public class ApplicationDbContext
         {
             configuration.Properties<string>().HaveMaxLength(100);
         }
-    }
+    
 }
