@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "LZ8cZ/Rr/6SKfbAxaohfgBqKUeyrJvHtYjlafg8TOz1t+4WORg9zwlu2+rfYozNvInirZPJ0zJ0P2KDzb5Mcmw==",
+  "dgSpecHash": "ei0lzA/FeG2jjP/xNaDp2du0XY86revdjRS4z8s6VTI4rxrptEpXHlsWS6Rv1o25WSY4znpeCadZdXhlujNRzQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\fhlot\\Desktop\\Projeto C#\\src\\IWantApp.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\fhlot\\.nuget\\packages\\flunt\\2.0.5\\flunt.2.0.5.nupkg.sha512",
     "C:\\Users\\fhlot\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\fhlot\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\fhlot\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
@@ -14,6 +15,7 @@
     "C:\\Users\\fhlot\\.nuget\\packages\\microsoft.entityframeworkcore.design\\6.0.8\\microsoft.entityframeworkcore.design.6.0.8.nupkg.sha512",
     "C:\\Users\\fhlot\\.nuget\\packages\\microsoft.entityframeworkcore.relational\\6.0.8\\microsoft.entityframeworkcore.relational.6.0.8.nupkg.sha512",
     "C:\\Users\\fhlot\\.nuget\\packages\\microsoft.entityframeworkcore.sqlserver\\6.0.8\\microsoft.entityframeworkcore.sqlserver.6.0.8.nupkg.sha512",
+    "C:\\Users\\fhlot\\.nuget\\packages\\microsoft.entityframeworkcore.tools\\6.0.8\\microsoft.entityframeworkcore.tools.6.0.8.nupkg.sha512",
     "C:\\Users\\fhlot\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\fhlot\\.nuget\\packages\\microsoft.extensions.caching.abstractions\\6.0.0\\microsoft.extensions.caching.abstractions.6.0.0.nupkg.sha512",
     "C:\\Users\\fhlot\\.nuget\\packages\\microsoft.extensions.caching.memory\\6.0.1\\microsoft.extensions.caching.memory.6.0.1.nupkg.sha512",
