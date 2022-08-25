@@ -20,6 +20,7 @@ public class ApplicationDbContext: IdentityDbContext<IdentityUser>
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             builder.Ignore<Notification>();
             builder.Entity<Product>().Property(prod => prod.Name).IsRequired();
             builder.Entity<Product>().Property(prod => prod.Description).HasMaxLength(255);
