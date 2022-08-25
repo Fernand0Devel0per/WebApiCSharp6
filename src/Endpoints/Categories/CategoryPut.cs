@@ -19,7 +19,7 @@ public class CategoryPut
         if (category == null) return Results.NotFound();
 
         category.EditInfo(category.Name, category.Active);
-        if(!category.IsValid) return Results.ValidationProblem(category.Notifications.ConvertToProblemDetails())
+        if (!category.IsValid) return Results.ValidationProblem(category.Notifications.ConvertToProblemDetails());
         context.SaveChanges();
         return Results.Ok(category);
     }
