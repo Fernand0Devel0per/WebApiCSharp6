@@ -16,15 +16,18 @@ public class EmployeePost
         var user = new IdentityUser {UserName = employeeRequest.Email, Email = employeeRequest.Email };
         var result =  userManager.CreateAsync(user, employeeRequest.Password).Result;
         
-        if (!result.Succeeded) return Results.BadRequest(result.Errors.First());
+        var userClams = new List<Claim>()
+        {
+            new Claim("EmployeeCode", employeeRequest.EmployeeCode),
+            new Claim("Name", employeeRequest.Name)
 
-        var clamResult = userManager.AddClaimAsync(user, new Claim("EmployeeCode", employeeRequest.EmployeeCode)).Result;
-        
-        if (!result.Succeeded) return Results.BadRequest(clamResult.Errors.First());
+        };
 
-        clamResult = userManager.AddClaimAsync(user, new Claim("Name", employeeRequest.Name)).Result;
+        if (!result.Succeeded) return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
 
-        if (!result.Succeeded) return Results.BadRequest(clamResult.Errors.First());
+        var clamResult = userManager.AddClaimsAsync(user, userClams).Result;
+
+        if (!result.Succeeded) return Results.ValidationProblem(clamResult.Errors.ConvertToProblemDetails());
 
         return Results.Created($"/employees/{user.Id}", user.Id);
         
