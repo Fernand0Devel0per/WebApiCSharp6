@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using IWantApp.Infra.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using System.Security.Claims;
@@ -13,18 +14,13 @@ public class EmployeeGetAll
 
     public static Delegate Handle => Action;
 
-    public static IResult Action(int? page, int? rows, IConfiguration configuration)
+    public static IResult Action(int? page, int? rows, QueryAllUsersWithClaimName query)
     {
-        var db = new SqlConnection(configuration["ConnectionString:IWantDb"]);
-        var employees = db.Query<EmployeeResponse>(
-            @"select Email, ClaimValue as Name
-                from AspNetUsers u inner
-                join AspNetUserClaims c
-                on u.id = c.UserId and claimtype = 'Name'
-                Order by name
-                OFFSET (@page -1) * @rows Rows Fetch Next @rows Rows Only", new {page, rows }
-            );
-        return Results.Ok(employees);
+        if (page < 1 || rows < 1) return Results.BadRequest();
+        {
+
+        }
+        return Results.Ok(query.Execute(page.Value, rows.Value));
     
     }
 
