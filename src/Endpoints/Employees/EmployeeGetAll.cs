@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using IWantApp.Infra.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using System.Security.Claims;
@@ -14,6 +15,7 @@ public class EmployeeGetAll
 
     public static Delegate Handle => Action;
 
+    [Authorize(Policy = "EmployeePolicy")]
     public static IResult Action(int? page, int? rows, QueryAllUsersWithClaimName query)
     {
         if (page < 1 || rows < 1) return Results.BadRequest();
