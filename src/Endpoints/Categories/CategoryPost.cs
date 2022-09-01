@@ -1,6 +1,7 @@
 ﻿using IWantApp.Domain.Products;
 using IWantApp.Infra.Data;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace IWantApp.Endpoints.Categories;
 
@@ -14,8 +15,9 @@ public class CategoryPost
 
     
     [Authorize]
-    public static IResult Action(CategoryRequest categoryRequest, ApplicationDbContext context)
+    public static IResult Action(CategoryRequest categoryRequest, HttpContext http, ApplicationDbContext context)
     {
+        var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
         var category = new Category(categoryRequest.Name, "Fernando", "Fernando");
 
         if (!category.IsValid)
