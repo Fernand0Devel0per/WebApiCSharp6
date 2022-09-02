@@ -1,12 +1,4 @@
-using IWantApp.Endpoints.Categories;
-using IWantApp.Endpoints.Employee;
-using IWantApp.Endpoints.Security;
-using IWantApp.Infra.Data;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using Microsoft.AspNetCore.Diagnostics;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -77,5 +69,16 @@ app.MapMethods(CategoryPut.Template, CategoryPut.Methods, CategoryPut.Handle);
 
 app.MapMethods(TokenPost.Template, TokenPost.Methods, TokenPost.Handle);
 
+app.UseExceptionHandler("/error");
+app.Map("/error", (HttpContext http) =>
+{
+    var error = http.Features?.Get<IExceptionHandlerFeature>()?.Error;
+    if (error != null)
+    {
+        if (error is SqlException) Results.Problem(title: "DataBase is out", statusCode: 500);   
+    }
+
+    return Results.Problem(title: "An error ocurred", statusCode: 500);
+});
 
 app.Run();

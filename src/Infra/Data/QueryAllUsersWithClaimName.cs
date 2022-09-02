@@ -1,8 +1,4 @@
-﻿using Dapper;
-using IWantApp.Endpoints.Employee;
-using Microsoft.Data.SqlClient;
-
-namespace IWantApp.Infra.Data;
+﻿namespace IWantApp.Infra.Data;
 
 public class QueryAllUsersWithClaimName
 {

@@ -1,11 +1,4 @@
-﻿using Dapper;
-using IWantApp.Infra.Data;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Data.SqlClient;
-using System.Security.Claims;
-
-namespace IWantApp.Endpoints.Employee;
+﻿namespace IWantApp.Endpoints.Employee;
 
 public class EmployeeGetAll
 {
@@ -16,13 +9,13 @@ public class EmployeeGetAll
     public static Delegate Handle => Action;
 
     [Authorize(Policy = "EmployeePolicy")]
-    public static async Task<> Action(int? page, int? rows, QueryAllUsersWithClaimName query)
+    public static async Task<IResult> Action(int? page, int? rows, QueryAllUsersWithClaimName query)
     {
         if (page < 1 || rows < 1) return Results.BadRequest();
         {
 
         }
-        return await Results.Ok(query.Execute(page.Value, rows.Value));
+        return Results.Ok(await query.Execute(page.Value, rows.Value));
     
     }
 
