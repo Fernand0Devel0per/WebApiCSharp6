@@ -11,11 +11,11 @@ public class EmployeePost
 
     public static Delegate Handle => Action;
 
-    public static IResult Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager)
+    public static async Task<IResult> Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager)
     {
         var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
         var newUser= new IdentityUser {UserName = employeeRequest.Email, Email = employeeRequest.Email };
-        var result =  userManager.CreateAsync(newUser, employeeRequest.Password).Result;
+        var result = await userManager.CreateAsync(newUser, employeeRequest.Password);
         
         var userClams = new List<Claim>()
         {
@@ -27,11 +27,11 @@ public class EmployeePost
 
         if (!result.Succeeded) return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
 
-        var clamResult = userManager.AddClaimsAsync(user, userClams).Result;
+        var clamResult = await userManager.AddClaimsAsync(newUser, userClams);
 
         if (!result.Succeeded) return Results.ValidationProblem(clamResult.Errors.ConvertToProblemDetails());
 
-        return Results.Created($"/employees/{user.Id}", user.Id);
+        return Results.Created($"/employees/{newUser.Id}", newUser.Id);
         
     }
     
