@@ -11,15 +11,17 @@ public class EmployeePost
 
     public static Delegate Handle => Action;
 
-    public static IResult Action(EmployeeRequest employeeRequest, UserManager<IdentityUser> userManager)
+    public static IResult Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager)
     {
-        var user = new IdentityUser {UserName = employeeRequest.Email, Email = employeeRequest.Email };
-        var result =  userManager.CreateAsync(user, employeeRequest.Password).Result;
+        var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
+        var newUser= new IdentityUser {UserName = employeeRequest.Email, Email = employeeRequest.Email };
+        var result =  userManager.CreateAsync(newUser, employeeRequest.Password).Result;
         
         var userClams = new List<Claim>()
         {
             new Claim("EmployeeCode", employeeRequest.EmployeeCode),
-            new Claim("Name", employeeRequest.Name)
+            new Claim("Name", employeeRequest.Name),
+            new Claim("Createby", userId),
 
         };
 
