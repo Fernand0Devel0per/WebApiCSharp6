@@ -16,13 +16,13 @@ public class EmployeeGetAll
     public static Delegate Handle => Action;
 
     [Authorize(Policy = "EmployeePolicy")]
-    public static IResult Action(int? page, int? rows, QueryAllUsersWithClaimName query)
+    public static async Task<> Action(int? page, int? rows, QueryAllUsersWithClaimName query)
     {
         if (page < 1 || rows < 1) return Results.BadRequest();
         {
 
         }
-        return Results.Ok(query.Execute(page.Value, rows.Value));
+        return await Results.Ok(query.Execute(page.Value, rows.Value));
     
     }
 
