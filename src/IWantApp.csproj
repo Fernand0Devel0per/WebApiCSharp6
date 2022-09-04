@@ -7,29 +7,29 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<Using Include="Dapper;"/>
-		<Using Include="System.Text;"/>
-		<Using Include="System.Security.Claims;"/>
-		<Using Include="System.IdentityModel.Tokens.Jwt;"/>
-		<Using Include="Microsoft.AspNetCore.Mvc"/>
-		<Using Include="Microsoft.AspNetCore.Identity;"/>
-		<Using Include="Microsoft.AspNetCore.Authorization;"/>
-		<Using Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>
-		<Using Include="Microsoft.Data.SqlClient;"/>
-		<Using Include="Microsoft.IdentityModel.Tokens;"/>
-		<Using Include="Flunt.Validations;"/>
-		<Using Include="Flunt.Notifications;"/>
+		<Using Include="Dapper;" />
+		<Using Include="System.Text;" />
+		<Using Include="System.Security.Claims;" />
+		<Using Include="System.IdentityModel.Tokens.Jwt;" />
+		<Using Include="Microsoft.AspNetCore.Mvc" />
+		<Using Include="Microsoft.AspNetCore.Identity;" />
+		<Using Include="Microsoft.AspNetCore.Authorization;" />
+		<Using Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+		<Using Include="Microsoft.Data.SqlClient;" />
+		<Using Include="Microsoft.IdentityModel.Tokens;" />
+		<Using Include="Flunt.Validations;" />
+		<Using Include="Flunt.Notifications;" />
 		
 		
 
 
-		<Using Include="IWantApp.Infra.Data;"/>
-		<Using Include="IWantApp.Domain.Products;"/>
-		<Using Include="IWantApp.Endpoints.Categories;"/>
-		<Using Include="IWantApp.Endpoints.Employee;"/>
-		<Using Include="IWantApp.Endpoints.Security;"/>
-		<Using Include="IWantApp.Endpoints.Categories;"/>
-		<Using Include="IWantApp.Domain.Products;"/>
+		<Using Include="IWantApp.Infra.Data;" />
+		<Using Include="IWantApp.Domain.Products;" />
+		<Using Include="IWantApp.Endpoints.Categories;" />
+		<Using Include="IWantApp.Endpoints.Employee;" />
+		<Using Include="IWantApp.Endpoints.Security;" />
+		<Using Include="IWantApp.Endpoints.Categories;" />
+		<Using Include="IWantApp.Domain.Products;" />
 		
 		
 	</ItemGroup>
@@ -49,6 +49,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="5.7.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
   </ItemGroup>
 
