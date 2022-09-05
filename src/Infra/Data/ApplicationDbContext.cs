@@ -25,7 +25,8 @@ public class ApplicationDbContext: IdentityDbContext<IdentityUser>
             builder.Entity<Product>().Property(prod => prod.Name).IsRequired();
             builder.Entity<Product>().Property(prod => prod.Description).HasMaxLength(255);
             builder.Entity<Category>().Property(cat => cat.Name).IsRequired();
-        }
+        builder.Entity<Product>().Property(prod => prod.Price).HasColumnType("decimal(10,2)").IsRequired();
+    }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder configuration)
         {
