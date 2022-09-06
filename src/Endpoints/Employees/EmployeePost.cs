@@ -1,4 +1,6 @@
-﻿namespace IWantApp.Endpoints.Employee;
+﻿using IWantApp.Domain.Users;
+
+namespace IWantApp.Endpoints.Employee;
 
 public class EmployeePost
 {
@@ -8,28 +10,23 @@ public class EmployeePost
 
     public static Delegate Handle => Action;
 
-    public static async Task<IResult> Action(EmployeeRequest employeeRequest, HttpContext http, UserManager<IdentityUser> userManager)
+    public static async Task<IResult> Action(EmployeeRequest employeeRequest, HttpContext http, UserCreator userCreator)
     {
         var userId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
-        var newUser= new IdentityUser {UserName = employeeRequest.Email, Email = employeeRequest.Email };
-        var result = await userManager.CreateAsync(newUser, employeeRequest.Password);
-        
+
         var userClams = new List<Claim>()
         {
             new Claim("EmployeeCode", employeeRequest.EmployeeCode),
             new Claim("Name", employeeRequest.Name),
             new Claim("Createby", userId),
-
         };
 
-        if (!result.Succeeded) return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
+        (IdentityResult identity, string userId) result = await userCreator.Create(employeeRequest.Email, employeeRequest.Password, userClams);
 
-        var clamResult = await userManager.AddClaimsAsync(newUser, userClams);
+        if (!result.identity.Succeeded) return Results.ValidationProblem(result.identity.Errors.ConvertToProblemDetails());
 
-        if (!result.Succeeded) return Results.ValidationProblem(clamResult.Errors.ConvertToProblemDetails());
+        return Results.Created($"/clients/{result.userId}", result.userId);
 
-        return Results.Created($"/employees/{newUser.Id}", newUser.Id);
-        
     }
     
 }
