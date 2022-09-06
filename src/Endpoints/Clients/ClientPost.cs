@@ -1,4 +1,6 @@
-﻿namespace IWantApp.Endpoints.Clients;
+﻿using IWantApp.Domain.Users;
+
+namespace IWantApp.Endpoints.Clients;
 
 public class ClientPost
 {
@@ -9,11 +11,9 @@ public class ClientPost
     public static Delegate Handle => Action;
 
     [AllowAnonymous]
-    public static async Task<IResult> Action(ClientRequest clientRequest, HttpContext http, UserManager<IdentityUser> userManager)
+    public static async Task<IResult> Action(ClientRequest clientRequest, UserCreator userCreator)
     {
-        var newUser= new IdentityUser {UserName = clientRequest.Email, Email = clientRequest.Email };
-        var result = await userManager.CreateAsync(newUser, clientRequest.Password);
-        
+
         var userClams = new List<Claim>()
         {
             new Claim("Cpf", clientRequest.Cpf),
@@ -21,14 +21,26 @@ public class ClientPost
 
         };
 
-        if (!result.Succeeded) return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
+        (IdentityResult identity, string userId) result = await userCreator.Create(clientRequest.Email, clientRequest.Password, userClams);
 
-        var clamResult = await userManager.AddClaimsAsync(newUser, userClams);
+        if (!result.identity.Succeeded) return Results.ValidationProblem(result.identity.Errors.ConvertToProblemDetails());
 
-        if (!result.Succeeded) return Results.ValidationProblem(clamResult.Errors.ConvertToProblemDetails());
-
-        return Results.Created($"/clients/{newUser.Id}", newUser.Id);
+        return Results.Created($"/clients/{result.userId}", result.userId);
         
     }
     
 }
+
+//var newUser= new IdentityUser {UserName = clientRequest.Email, Email = clientRequest.Email };
+//var result = await userManager.CreateAsync(newUser, clientRequest.Password);
+
+//var userClams = new List<Claim>()
+//{
+//    new Claim("Cpf", clientRequest.Cpf),
+//    new Claim("Name", clientRequest.Name),
+
+//};
+
+//if (!result.Succeeded) return Results.ValidationProblem(result.Errors.ConvertToProblemDetails());
+
+//var clamResult = await userManager.AddClaimsAsync(newUser, userClams);
