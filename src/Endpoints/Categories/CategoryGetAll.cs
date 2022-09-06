@@ -1,4 +1,6 @@
-﻿namespace IWantApp.Endpoints.Categories;
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace IWantApp.Endpoints.Categories;
 
 public class CategoryGetAll
 {
@@ -10,7 +12,7 @@ public class CategoryGetAll
 
     public static IResult Action(ApplicationDbContext context)
     {
-        var category = context.Categories.ToList();
+        var category = context.Categories.AsNoTracking().ToList();
         var response = category.Select(c => new CategoryResponse { Id = c.Id, Name = c.Name, Active = c.Active });
         return Results.Ok(response);
     }

@@ -13,11 +13,11 @@ public class ProductGetById
     [Authorize(Policy = "EmployeePolicy")]
     public static async Task<IResult> Action([FromRoute] Guid id, ApplicationDbContext context)
     {
-        var product = await context.Products.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
+        var product = await context.Products.AsNoTracking().Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
         
         if (product == null) return Results.ValidationProblem(product.Notifications.ConvertToProblemDetails());
 
-        var results = new ProductResponse(product.Name, product.Category.Name, product.Description, product.HasStock, product.Active);
+        var results = new ProductResponse(product.Name, product.Category.Name, product.Description, product.HasStock, product.Price, product.Active);
         return Results.Ok(results);
     }
 
