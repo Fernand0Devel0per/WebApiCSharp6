@@ -57,6 +57,8 @@ namespace IWantApp.Migrations
                 column: "ProductsId");
         }
 
+        
+
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -67,3 +69,8 @@ namespace IWantApp.Migrations
         }
     }
 }
+
+
+ 
+Console.WriteLine(lista.numero);
+Console.WriteLine(lista.palavra);
