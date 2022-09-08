@@ -1,5 +1,6 @@
 using IWantApp.Domain.Users;
 using IWantApp.Endpoints.Clients;
+using IWantApp.Endpoints.Orders;
 using IWantApp.Endpoints.Products;
 using Microsoft.AspNetCore.Diagnostics;
 using Serilog;
@@ -96,6 +97,9 @@ app.MapMethods(ProductGetAll.Template, ProductGetAll.Methods, ProductGetAll.Hand
 app.MapMethods(ProductGetById.Template, ProductGetById.Methods, ProductGetById.Handle);
 
 app.MapMethods(ClientPost.Template, ClientPost.Methods, ClientPost.Handle);
+
+app.MapMethods(OrderPost.Template, OrderPost.Methods, OrderPost.Handle);
+app.MapMethods(OrderGet.Template, OrderGet.Methods, OrderGet.Handle);
 
 app.UseExceptionHandler("/error");
 app.Map("/error", (HttpContext http) =>

@@ -69,8 +69,3 @@ namespace IWantApp.Migrations
         }
     }
 }
-
-
- 
-Console.WriteLine(lista.numero);
-Console.WriteLine(lista.palavra);

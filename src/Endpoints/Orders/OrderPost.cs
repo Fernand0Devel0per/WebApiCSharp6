@@ -1,6 +1,7 @@
 ﻿using IWantApp.Domain.Orders;
+using IWantApp.Endpoints.Clients;
 
-namespace IWantApp.Endpoints.Clients;
+namespace IWantApp.Endpoints.Orders;
 
 public class OrderPost
 {
@@ -16,12 +17,8 @@ public class OrderPost
         var clientId = http.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier).Value;
         var clientName = http.User.Claims.First(c => c.Type == "Name").Value;
 
-        if (orderRequest.ProductIds == null || !orderRequest.ProductIds.Any())
-            return Results.BadRequest("Products is required");
-        if (string.IsNullOrEmpty(orderRequest.DeliveryAddress) )
-            return Results.BadRequest("DeliveryAddress is required");
-
         List<Product> products = null;
+
         if (orderRequest.ProductIds.Any() || orderRequest.ProductIds != null)
             products = context.Products.Where(p => orderRequest.ProductIds.Contains(p.Id)).ToList();
 
